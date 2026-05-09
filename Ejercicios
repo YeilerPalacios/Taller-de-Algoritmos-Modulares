@@ -1,0 +1,370 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int opcion;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("===== MENU PRINCIPAL =====");
+            Console.WriteLine("1. Sistema IPS");
+            Console.WriteLine("2. Sistema Académico");
+            Console.WriteLine("3. Sistema Producción");
+            Console.WriteLine("0. Salir");
+            Console.Write("Seleccione una opción: ");
+
+            opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    SistemaIPS();
+                    break;
+
+                case 2:
+                    SistemaAcademico();
+                    break;
+
+                case 3:
+                    SistemaProduccion();
+                    break;
+
+                case 0:
+                    Console.WriteLine("Saliendo...");
+                    break;
+
+                default:
+                    Console.WriteLine("Opción inválida");
+                    break;
+            }
+
+            Console.WriteLine("\nPresione una tecla para continuar...");
+            Console.ReadKey();
+
+        } while (opcion != 0);
+    }
+
+    // 1. SISTEMA IPS
+
+    static void SistemaIPS()
+    {
+        const int MAX = 30;
+
+        string[] documento = new string[MAX];
+        string[] nombre = new string[MAX];
+        int[] edad = new int[MAX];
+        string[] tipo = new string[MAX];
+        int[] prioridad = new int[MAX];
+
+        int contador = 0;
+        int opcion;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("===== SISTEMA IPS =====");
+            Console.WriteLine("1. Registrar paciente");
+            Console.WriteLine("2. Mostrar pacientes");
+            Console.WriteLine("3. Buscar por documento");
+            Console.WriteLine("4. Cantidad por tipo");
+            Console.WriteLine("5. Paciente mayor prioridad");
+            Console.WriteLine("0. Volver");
+
+            opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+
+                    if (contador < MAX)
+                    {
+                        Console.Write("Documento: ");
+                        documento[contador] = Console.ReadLine();
+
+                        Console.Write("Nombre: ");
+                        nombre[contador] = Console.ReadLine();
+
+                        Console.Write("Edad: ");
+                        edad[contador] = int.Parse(Console.ReadLine());
+
+                        Console.Write("Tipo atención: ");
+                        tipo[contador] = Console.ReadLine();
+
+                        Console.Write("Prioridad (1-5): ");
+                        prioridad[contador] = int.Parse(Console.ReadLine());
+
+                        contador++;
+
+                        Console.WriteLine("Paciente registrado");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hay cupos");
+                    }
+
+                    break;
+
+                case 2:
+
+                    for (int i = 0; i < contador; i++)
+                    {
+                        Console.WriteLine($"{documento[i]} - {nombre[i]} - {tipo[i]} - Prioridad: {prioridad[i]}");
+                    }
+
+                    break;
+
+                case 3:
+
+                    Console.Write("Ingrese documento: ");
+                    string buscar = Console.ReadLine();
+
+                    bool encontrado = false;
+
+                    for (int i = 0; i < contador; i++)
+                    {
+                        if (documento[i] == buscar)
+                        {
+                            Console.WriteLine($"{nombre[i]} - {edad[i]} años");
+                            encontrado = true;
+                        }
+                    }
+
+                    if (!encontrado)
+                    {
+                        Console.WriteLine("Paciente no encontrado");
+                    }
+
+                    break;
+
+                case 4:
+
+                    int urgencias = 0;
+                    int general = 0;
+                    int prioritaria = 0;
+
+                    for (int i = 0; i < contador; i++)
+                    {
+                        if (tipo[i].ToLower() == "urgencias")
+                            urgencias++;
+
+                        else if (tipo[i].ToLower() == "consulta general")
+                            general++;
+
+                        else if (tipo[i].ToLower() == "prioritaria")
+                            prioritaria++;
+                    }
+
+                    Console.WriteLine($"Urgencias: {urgencias}");
+                    Console.WriteLine($"Consulta General: {general}");
+                    Console.WriteLine($"Prioritaria: {prioritaria}");
+
+                    break;
+
+                case 5:
+
+                    int mayor = prioridad[0];
+                    int pos = 0;
+
+                    for (int i = 1; i < contador; i++)
+                    {
+                        if (prioridad[i] > mayor)
+                        {
+                            mayor = prioridad[i];
+                            pos = i;
+                        }
+                    }
+
+                    Console.WriteLine($"Paciente: {nombre[pos]}");
+                    Console.WriteLine($"Prioridad: {mayor}");
+
+                    break;
+            }
+
+            Console.ReadKey();
+
+        } while (opcion != 0);
+    }
+
+    // 2. SISTEMA ACADEMICO
+
+    static void SistemaAcademico()
+    {
+        const int MAX = 25;
+
+        string[] codigo = new string[MAX];
+        string[] nombre = new string[MAX];
+
+        double[] n1 = new double[MAX];
+        double[] n2 = new double[MAX];
+        double[] n3 = new double[MAX];
+
+        double[] asistencia = new double[MAX];
+
+        int contador = 0;
+
+        Console.Write("Cantidad de estudiantes: ");
+        contador = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < contador; i++)
+        {
+            Console.WriteLine($"\nEstudiante {i + 1}");
+
+            Console.Write("Código: ");
+            codigo[i] = Console.ReadLine();
+
+            Console.Write("Nombre: ");
+            nombre[i] = Console.ReadLine();
+
+            do
+            {
+                Console.Write("Nota 1: ");
+                n1[i] = double.Parse(Console.ReadLine());
+
+            } while (n1[i] < 0 || n1[i] > 5);
+
+            do
+            {
+                Console.Write("Nota 2: ");
+                n2[i] = double.Parse(Console.ReadLine());
+
+            } while (n2[i] < 0 || n2[i] > 5);
+
+            do
+            {
+                Console.Write("Nota 3: ");
+                n3[i] = double.Parse(Console.ReadLine());
+
+            } while (n3[i] < 0 || n3[i] > 5);
+
+            Console.Write("Asistencia: ");
+            asistencia[i] = double.Parse(Console.ReadLine());
+        }
+
+        double suma = 0;
+        double mejor = -1;
+        double peor = 6;
+
+        string mejorEst = "";
+        string peorEst = "";
+
+        Console.WriteLine("\n===== RESULTADOS =====");
+
+        for (int i = 0; i < contador; i++)
+        {
+            double definitiva = (n1[i] + n2[i] + n3[i]) / 3;
+
+            suma += definitiva;
+
+            string estado;
+
+            if (definitiva >= 3.5)
+                estado = "Aprobado";
+            else if (definitiva >= 2)
+                estado = "Habilita";
+            else
+                estado = "Reprueba";
+
+            Console.WriteLine($"{nombre[i]} - Definitiva: {definitiva:F2} - {estado}");
+
+            if (definitiva > mejor)
+            {
+                mejor = definitiva;
+                mejorEst = nombre[i];
+            }
+
+            if (definitiva < peor)
+            {
+                peor = definitiva;
+                peorEst = nombre[i];
+            }
+        }
+
+        Console.WriteLine($"\nPromedio general: {suma / contador:F2}");
+        Console.WriteLine($"Mejor estudiante: {mejorEst}");
+        Console.WriteLine($"Peor estudiante: {peorEst}");
+    }
+
+    // 3. SISTEMA PRODUCCION
+
+    static void SistemaProduccion()
+    {
+        const int OPERARIOS = 10;
+        const int DIAS = 5;
+
+        string[] codigo = new string[OPERARIOS];
+        string[] nombre = new string[OPERARIOS];
+
+        int[,] produccion = new int[OPERARIOS, DIAS];
+
+        for (int i = 0; i < OPERARIOS; i++)
+        {
+            Console.WriteLine($"\nOperario {i + 1}");
+
+            Console.Write("Código: ");
+            codigo[i] = Console.ReadLine();
+
+            Console.Write("Nombre: ");
+            nombre[i] = Console.ReadLine();
+
+            for (int j = 0; j < DIAS; j++)
+            {
+                do
+                {
+                    Console.Write($"Producción día {j + 1}: ");
+                    produccion[i, j] = int.Parse(Console.ReadLine());
+
+                } while (produccion[i, j] < 0);
+            }
+        }
+
+        int mejorTotal = -1;
+        string mejorOperario = "";
+
+        int sumaGeneral = 0;
+
+        Console.WriteLine("\n===== PRODUCCIÓN SEMANAL =====");
+
+        for (int i = 0; i < OPERARIOS; i++)
+        {
+            int total = 0;
+
+            for (int j = 0; j < DIAS; j++)
+            {
+                total += produccion[i, j];
+            }
+
+            Console.WriteLine($"{nombre[i]} -> {total}");
+
+            sumaGeneral += total;
+
+            if (total > mejorTotal)
+            {
+                mejorTotal = total;
+                mejorOperario = nombre[i];
+            }
+        }
+
+        Console.WriteLine($"\nMejor operario: {mejorOperario}");
+        Console.WriteLine($"Promedio general: {sumaGeneral / OPERARIOS}");
+
+        Console.WriteLine("\nDías con baja producción (<20)");
+
+        for (int j = 0; j < DIAS; j++)
+        {
+            int totalDia = 0;
+
+            for (int i = 0; i < OPERARIOS; i++)
+            {
+                totalDia += produccion[i, j];
+            }
+
+            if (totalDia < 20)
+            {
+                Console.WriteLine($"Día {j + 1}");
+            }
+        }
+    }
+}
